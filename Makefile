@@ -5,7 +5,7 @@
 OUTPUT_FILENAME ?= main.bin
 
 # Default target
-all: prod
+all: prod_gui
 
 # Run the server for prod settings (able to connect to the Meta Quest). If npm is not installed, it will skip the build step.
 prod:
@@ -16,6 +16,10 @@ prod:
 prod_gui:
 	cd ./dashboard && (npm i && npm run build && mkdir -p ../phosphobot/resources/dist/ && cp -r ./dist/* ../phosphobot/resources/dist/)
 	cd phosphobot && uv run --python 3.10 phosphobot run --simulation=gui
+
+prod_gui_sim:
+	cd ./dashboard && (npm i && npm run build && mkdir -p ../phosphobot/resources/dist/ && cp -r ./dist/* ../phosphobot/resources/dist/)
+	cd phosphobot && uv run --python 3.10 phosphobot run --simulation=gui --no-telemetry --only-simulation
 
 # Run the server for prod settings (able to connect to the Meta Quest) but with telemetry disabled. If npm is not installed, it will skip the build step.
 prod_no_telemetry:

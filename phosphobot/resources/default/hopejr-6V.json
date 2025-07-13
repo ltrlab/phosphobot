@@ -1,0 +1,21 @@
+{
+  "name": "hopejr",
+  "servos_voltage": 6.0,
+
+  "servos_offsets": [2048, 2048, 2048, 2048, 2048, 2048, 2048],
+  "servos_calibration_position": [2048, 2048, 2048, 2048, 2048, 2048, 2048],
+  "servos_offsets_signs": [1, 1, 1, 1, 1, 1, 1],
+
+  "pid_gains": [
+    { "p_gain": 10, "i_gain": 0, "d_gain": 16 },  
+    { "p_gain": 10, "i_gain": 0, "d_gain": 16 },  
+    { "p_gain": 10, "i_gain": 0, "d_gain": 16 },  
+    { "p_gain": 10, "i_gain": 0, "d_gain": 16 },  
+    { "p_gain": 10, "i_gain": 0, "d_gain": 16 },  
+    { "p_gain": 10, "i_gain": 0, "d_gain": 16 },  
+    { "p_gain": 10, "i_gain": 0, "d_gain": 16 } 
+  ],
+
+  "gripping_threshold": 150,
+  "non_gripping_threshold": 10
+}

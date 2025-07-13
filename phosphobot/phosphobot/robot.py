@@ -19,7 +19,8 @@ from phosphobot.hardware import (
     UnitreeGo2,
     WX250SHardware,
     RemotePhosphobot,
-    get_sim,
+    HopeJRHardware,
+    get_sim
 )
 from phosphobot.models import RobotConfigStatus
 from phosphobot.utils import is_can_plugged
@@ -34,6 +35,7 @@ robot_name_to_class = {
     LeKiwi.name: LeKiwi,
     PiperHardware.name: PiperHardware,
     RemotePhosphobot.name: RemotePhosphobot,
+    HopeJRHardware.name: HopeJRHardware,
 }
 
 
@@ -137,8 +139,18 @@ class RobotConnectionManager:
 
         # If we are only simulating, we can just use the SO100Hardware class
         if config.ONLY_SIMULATION:
-            logger.debug("ONLY_SIMULATION is set to True. Using SO-100 in simulation.")
-            self._all_robots = [SO100Hardware(only_simulation=True)]
+            # Choose which robot to spawn in PyBullet when running head-only.
+            # Default is hopejr; you can override with an env-var.
+            
+            #sim_model = "hopejr"
+            #sim_cls = {
+            #    "hopejr": HopeJRHardware}.get(sim_model, HopeJRHardware)
+
+            sim_model = "piper"
+            sim_cls   = {"piper": PiperHardware}.get(sim_model, PiperHardware)
+
+            logger.debug(f"ONLY_SIMULATION = True → launching {sim_cls.name} in simulation.")
+            self._all_robots = [sim_cls(only_simulation=True)]
             return
 
         # Keep track of connected devices by port name and serial to avoid duplicates
@@ -159,6 +171,7 @@ class RobotConnectionManager:
                 WX250SHardware,
                 KochHardware,
                 SO100Hardware,
+                HopeJRHardware
             ]:
                 if not hasattr(robot_class, "name") or not hasattr(
                     robot_class, "from_port"
